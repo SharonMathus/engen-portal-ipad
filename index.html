@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#003764">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Portal Engen">
+  <meta name="description" content="Portal de Información Engen">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <title>Portal de Información | Engen</title>
+</head>
+<body>
+  <main id="login" class="login-screen" hidden>
+    <section class="login-card">
+      <div class="brand-mark">››</div>
+      <h1>Portal de Información</h1>
+      <p>Ingresa tu correo corporativo para consultar tus aplicaciones asignadas.</p>
+      <form id="loginForm">
+        <label for="email">Correo corporativo</label>
+        <input id="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="usuario@engen.com.mx" required>
+        <button type="submit" id="loginButton">Continuar</button>
+      </form>
+      <p id="loginError" class="error" role="alert"></p>
+    </section>
+  </main>
+
+  <main id="portal" class="portal" hidden>
+    <header class="header">
+      <div class="header-title"><span class="brand-mark">››</span><div><h1>Portal de Información</h1><p>Tus herramientas, reportes y aplicaciones en un solo lugar.</p></div></div>
+      <div class="header-user"><span id="currentEmail"></span><button type="button" id="logoutButton" class="header-button">Cambiar correo</button></div>
+    </header>
+    <section id="menu" class="menu">
+      <div class="section-heading"><h2>Selecciona una aplicación</h2><p>Estas son las herramientas disponibles para tu usuario.</p><div class="accent"></div></div>
+      <p id="menuStatus" class="status" role="status"></p>
+      <div id="cards" class="cards"></div>
+      <button id="refreshButton" type="button" class="refresh-button">Actualizar aplicaciones</button>
+    </section>
+    <section id="viewer" class="viewer" hidden>
+      <div class="viewer-toolbar"><button id="backButton" type="button">← Inicio</button><strong id="viewerTitle"></strong><button id="closeButton" type="button" aria-label="Cerrar dashboard">✕</button></div>
+      <div class="frame-wrap"><iframe id="dashboardFrame" title="Dashboard Power BI" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+      <p id="viewerHint" class="viewer-hint" hidden>Este reporte no permite mostrarse dentro del Portal en Safari. Solicita una versión compatible con iPad.</p>
+    </section>
+    <footer class="footer"></footer>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>
