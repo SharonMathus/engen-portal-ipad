@@ -61,7 +61,7 @@ async function enterPortal(email, remember) {
 }
 
 function openProject(project) {
-  // El iframe no permite controlar los filtros internos de Power BI en Safari.
+  // Safari no permite controlar los filtros internos de Power BI dentro del iframe.
   $('viewerTitle').textContent = project.proyecto;
   $('viewerHint').hidden = true;
   $('dashboardFrame').src = project.url;
@@ -88,13 +88,45 @@ $('loginForm').addEventListener('submit', async event => {
   catch (error) { $('loginError').textContent = error.message || 'No fue posible ingresar.'; }
   finally { $('loginButton').disabled = false; }
 });
-$('logoutButton').addEventListener('click', logout);
 $('backButton').addEventListener('click', backToMenu);
 $('closeButton').addEventListener('click', backToMenu);
 $('refreshButton').addEventListener('click', async () => {
   $('menuStatus').textContent = 'Actualizando aplicaciones…';
   try { projects = await loadProjects(currentEmail); renderCards(); }
   catch (error) { $('menuStatus').textContent = error.message || 'Error al actualizar.'; }
+});
+
+// Mantener presionado el simbolo >> durante 5 segundos para cambiar correo.
+// No muestra un boton de cambio en el encabezado.
+const switchButton = $('brandSwitch');
+let holdTimer = null;
+let holdTriggered = false;
+function cancelHold() {
+  if (holdTimer !== null) clearTimeout(holdTimer);
+  holdTimer = null;
+}
+function startHold(event) {
+  if (event.type === 'pointerdown' && event.button !== undefined && event.button !== 0) return;
+  cancelHold();
+  holdTriggered = false;
+  holdTimer = setTimeout(() => {
+    holdTimer = null;
+    holdTriggered = true;
+    if (window.confirm('¿Quieres cambiar el correo guardado en este dispositivo?')) logout();
+  }, 5000);
+}
+switchButton.addEventListener('pointerdown', startHold);
+switchButton.addEventListener('pointerup', cancelHold);
+switchButton.addEventListener('pointercancel', cancelHold);
+switchButton.addEventListener('pointerleave', cancelHold);
+switchButton.addEventListener('contextmenu', event => event.preventDefault());
+// Acceso alternativo con teclado: mantener Enter o Espacio por 5 segundos.
+switchButton.addEventListener('keydown', event => {
+  if ((event.key === 'Enter' || event.key === ' ') && !event.repeat && holdTimer === null) startHold(event);
+});
+switchButton.addEventListener('keyup', cancelHold);
+switchButton.addEventListener('click', event => {
+  if (holdTriggered) { event.preventDefault(); holdTriggered = false; }
 });
 
 (async () => {

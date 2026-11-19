@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Portal Engen">
   <meta name="description" content="Portal de Información Engen">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <title>Portal de Información | Engen</title>
 </head>
 <body>
@@ -29,8 +29,11 @@
 
   <main id="portal" class="portal" hidden>
     <header class="header">
-      <div class="header-title"><span class="brand-mark">››</span><div><h1>Portal de Información</h1><p>Tus herramientas, reportes y aplicaciones en un solo lugar.</p></div></div>
-      <div class="header-user"><span id="currentEmail"></span><button type="button" id="logoutButton" class="header-button">Cambiar correo</button></div>
+      <div class="header-title">
+        <button id="brandSwitch" class="brand-switch" type="button" aria-label="Opciones de usuario" title="Mantén presionado 5 segundos para cambiar correo">››</button>
+        <div class="header-copy"><h1>Portal de Información</h1><p>Tus herramientas, reportes y aplicaciones en un solo lugar.</p></div>
+      </div>
+      <div class="header-user"><span id="currentEmail"></span></div>
     </header>
     <section id="menu" class="menu">
       <div class="section-heading"><h2>Selecciona una aplicación</h2><p>Estas son las herramientas disponibles para tu usuario.</p><div class="accent"></div></div>
@@ -45,6 +48,6 @@
     </section>
     <footer class="footer"></footer>
   </main>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=2" defer></script>
 </body>
 </html>
